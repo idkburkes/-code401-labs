@@ -38,12 +38,13 @@ def parse_template(template):
     """    
     stripped = ''
     madlib_parts = []
+     # regex finds all words in current line of the form -> {word}
+    regex_pattern = r"{(.*?)}"
     for line in template.splitlines():
-        # regex finds all words in current line of the form -> {word}
-        matches = re.findall(r"{(.*?)}", line)
+        matches = re.findall(regex_pattern, line)
         for match in matches:
             madlib_parts.append(match)  
-        stripped += re.sub(r"{(.*?)}", '{}', line)
+        stripped += re.sub(regex_pattern, '{}', line)
     return [stripped, tuple(madlib_parts)]
 
 
